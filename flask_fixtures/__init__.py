@@ -215,3 +215,19 @@ class FixturesMixin(six.with_metaclass(MetaFixturesMixin, object)):
         app.config['FIXTURES_DIRS'] = fixtures_dirs
         cls.app = app
         cls.db = db
+
+
+# Add Flask-Script commands
+try:
+    from flask.ext.script import Manager
+except ImportError:
+    pass
+else:
+    from flask import current_app
+
+    FixturesCommand = Manager(usage="Load data in database from fixtures")
+
+    @FixturesCommand.command
+    def loaddata(fixture_filename):
+        db = current_app.extensions['sqlalchemy'].db
+        load_fixtures_from_file(db, fixture_filename)

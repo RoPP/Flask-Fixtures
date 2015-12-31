@@ -75,9 +75,12 @@ def load_fixtures(db, fixtures):
 
     for fixture in fixtures:
         if 'model' in fixture:
-            module_name, class_name = fixture['model'].rsplit('.', 1)
-            module = importlib.import_module(module_name)
-            model = getattr(module, class_name)
+            try:
+                module_name, class_name = fixture['model'].rsplit('.', 1)
+                module = importlib.import_module(module_name)
+                model = getattr(module, class_name)
+            except:
+                raise ValueError("'{0}' can not be found".format(fixture['model']))
             for fields in fixture['records']:
                 obj = model(**fields)
                 db.session.add(obj)

@@ -1,0 +1,10 @@
+[
+    {
+        "model": "models.author",
+        "records": [{
+            "id": 1,
+            "first_name": "William",
+            "last_name": "Gibson"
+        }]
+    }
+]

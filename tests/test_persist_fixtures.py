@@ -1,9 +1,6 @@
 from __future__ import absolute_import
 from __future__ import print_function
 import datetime
-import inspect
-import os
-import sys
 import unittest
 
 from myapp import app
@@ -38,9 +35,9 @@ if can_persist_fixtures():
 
         @classmethod
         def tearDownClass(self):
-            # Since we never tore down the DB in between tests, we should have 3
-            # authors and 5 books now (the initial fixtures plus the records the
-            # tests added).
+            # Since we never tore down the DB in between tests, we should have
+            # 3 authors and 5 books now (the initial fixtures plus the records
+            # the tests added).
             assert Author.query.count() == 3
             assert Book.query.count() == 5
 
@@ -75,4 +72,3 @@ if can_persist_fixtures():
             self.db.session.add(book)
 
             self.db.session.commit()
-

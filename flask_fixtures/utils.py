@@ -59,8 +59,10 @@ def print_msg(msg, header, file=sys.stdout):
     print(bottom_boarder, file=file)
     print(file=file)
 
+
 def print_info(msg):
     print_msg(msg, 'INFORMATION')
+
 
 def can_persist_fixtures():
     """Returns True if it's possible to persist fixtures across tests.
@@ -82,4 +84,3 @@ def can_persist_fixtures():
     filename = inspect.stack()[-1][1]
     executable = os.path.split(filename)[1]
     return executable in ('py.test', 'nosetests')
-

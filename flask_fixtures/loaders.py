@@ -23,6 +23,7 @@ except ImportError:
         the dateutil library for more flexible parsing of dates and times.""")
 
     from datetime import datetime
+
     def dtparse(dtstring):
         """Returns a datetime object for the given string"""
         return datetime.strptime(dtstring, '%Y-%m-%d')
@@ -36,7 +37,9 @@ try:
     import yaml
 except ImportError:
     def load(self, filename):
-        raise Exception("Could not load fixture '{0}'. Make sure you have PyYAML installed.".format(filename))
+        msg = "Could not load fixture '{0}'. Make sure you have PyYAML " \
+            "installed."
+        raise Exception(msg.format(filename))
     yaml = type('FakeYaml', (object,), {
         'load': load
     })()
@@ -81,10 +84,12 @@ def load(filename):
     name, extension = os.path.splitext(filename)
 
     for cls in FixtureLoader.__subclasses__():
-        # If a loader class has no extenions, log a warning so the developer knows
-        # that it will never be used anyhwhere
+        # If a loader class has no extenions, log a warning so the developer
+        # knows that it will never be used anyhwhere
         if not hasattr(cls, 'extensions'):
-            log.warn("The loader '{0}' is missing extensions and will not be used.".format(cls.__name__))
+            msg = "The loader '{0}' is missing extensions and will not be "\
+                "used."
+            log.warn(msg.format(cls.__name__))
             continue
 
         # Otherwise, check if the file's extension matches a loader extension
@@ -93,8 +98,10 @@ def load(filename):
                 return cls().load(filename)
 
     # None of the loaders matched, so raise an exception
-    raise Exception("Could not load fixture '{0}'. Unsupported file format.".format(filename))
+    msg = "Could not load fixture '{0}'. Unsupported file format."
+    raise Exception(msg.format(filename))
 
 
 def extensions():
-    return [ext for c in FixtureLoader.__subclasses__() for ext in c.extensions]
+    return [
+        ext for c in FixtureLoader.__subclasses__() for ext in c.extensions]

@@ -7,7 +7,6 @@ A fixtures library for testing Flask apps.
 from __future__ import absolute_import
 
 import os
-import subprocess
 from setuptools import setup
 
 
@@ -27,10 +26,10 @@ install_requires = [
                        'Flask-SQLAlchemy',
                        'six'
                    ]
-try:
-    import importlib
-except ImportError:
-    install_requires.append('importlib')
+# try:
+#     import importlib
+# except ImportError:
+#     install_requires.append('importlib')
 
 setup(
     name='Flask-Fixtures',
@@ -41,7 +40,8 @@ setup(
     author_email='vthakr@gmail.com',
     maintainer='Christopher Roach',
     maintainer_email='vthakr@gmail.com',
-    description='A simple library for adding database fixtures for unit tests using nothing but JSON or YAML.',
+    description='A simple library for adding database fixtures for unit tests '
+        'using nothing but JSON or YAML.',
     long_description=README,
     # py_modules=['flask_fixtures'],
     # if you would be using a package instead use packages instead

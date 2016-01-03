@@ -243,6 +243,25 @@ class FixturesMixin(six.with_metaclass(MetaFixturesMixin, object)):
         cls.db = db
 
 
+class Fixtures(object):
+
+    def __init__(self, app=None):
+        self.app = app
+        if app is not None:
+            self.init_app(app)
+
+    def init_app(self, app):
+        app.config.setdefault(
+            'FIXTURES_DIRS', [path.join(app.root_path, 'fixtures')])
+        # All relative paths should be relative to the app's root directory.
+        fixtures_dirs = []
+        for directory in app.config.get('FIXTURES_DIRS'):
+            if not path.isabs(directory):
+                directory = path.abspath(path.join(app.root_path, directory))
+            fixtures_dirs.append(directory)
+        app.config['FIXTURES_DIRS'] = fixtures_dirs
+        print(app.config.get('FIXTURES_DIRS'))
+
 # Add Flask-Script commands
 try:
     from flask.ext.script import Manager
